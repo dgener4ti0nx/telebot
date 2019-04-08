@@ -1,7 +1,7 @@
 #!/bin/bash
 TOKEN=$(<token)
 STDIN=$(cat)
-
+#editado
 MESSAGE=$STDIN
 ###################
 diego=773945556
