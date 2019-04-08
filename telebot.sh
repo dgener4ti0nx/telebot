@@ -16,8 +16,8 @@ else
 	echo "Sorry, receiver was not found."
 exit 1
 fi
-echo "curl -s -X POST https://api.telegram.org/bot$TOKEN/sendMessage -d chat_id=$CHATID"
-curl -s -X POST https://api.telegram.org/bot$TOKEN/sendMessage -d chat_id=$CHATID -d text="$MESSAGE" -d parse_mode="markdown" #> /dev/null
+
+curl -s -X POST https://api.telegram.org/bot$TOKEN/sendMessage -d chat_id=$CHATID -d text="$MESSAGE" -d parse_mode="markdown" > /dev/null
 
 echo -e "Sent to $1: $MESSAGE"
 
