@@ -1,5 +1,5 @@
 #!/bin/bash
-TOKEN=865881261:AAEdb7_XVSxaYIqIYIoKpyJinIIMLK9aXAE
+TOKEN=$(cat token)
 STDIN=$(cat)
 
 MESSAGE=$STDIN
