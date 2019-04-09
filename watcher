@@ -4,7 +4,7 @@ FILE=$1
 PROGRAM=$4
 while [ 1 ]
 do
-	if [[$PROGRAM == "cfx"]]
+	if [[ $PROGRAM == "cfx" ]]
 	then
 		if [[ "$(tail -1 $FILE)" == "This run of the ANSYS CFX Solver has finished." ]]
 		then
@@ -18,8 +18,7 @@ do
 		FLOWTIME_D=$(bc <<< "scale=3;$FLOWTIME/86400")
 		MESSAGE="*STEP*:$TIMESTEP\n*FLOW*:$FLOWTIME\[s], $FLOWTIME_H\[h], $FLOWTIME_D\[d]" 
 		echo -e $MESSAGE | bash telebot.sh $3
-	fi
-	elif [[$PROGRAM == "fluent"]]
+	elif [[ $PROGRAM == "fluent" ]]
 	then
 		if [[ "$(tail -500 $FILE | grep "exit" | cut -d" " -f1)" == "exit" ]]
 		then
