@@ -8,7 +8,7 @@ do
 	then
 		if [[ "$(tail -1 $FILE)" == "This run of the ANSYS CFX Solver has finished." ]]
 		then
-			echo "SUA SIMULAÇÃO ESTÁ PARADA !!!" | telebot $3
+			echo "SUA SIMULAÇÃO ESTÁ PARADA !!!" | telebot -s $3
 		fi
 		FLOWTIME=$( tail -1000 $FILE | grep "TIME STEP" | tail -1 | cut -d" " -f10 )
 		TIMESTEP=$( tail -1000 $FILE | grep "TIME STEP" | tail -1 | cut -d" " -f6 )
@@ -16,21 +16,19 @@ do
 		printf -v STEP "%.f" "$STEP"
 		FLOWTIME_H=$(bc <<< "scale=3;$FLOWTIME/3600")
 		FLOWTIME_D=$(bc <<< "scale=3;$FLOWTIME/86400")
-		MESSAGE="*STEP*:$TIMESTEP\n*FLOW*:$FLOWTIME\[s], $FLOWTIME_H\[h], $FLOWTIME_D\[d]" 
-		echo -e $MESSAGE | bash telebot.sh $3
-	fi
+		MESSAGE="*STEP*:$TIMESTEP\n*FLOW*:$FLOWTIME\[s], $FLOWTIME_H\[h], $FLOWTIME_D\[d]"
+		echo -e $MESSAGE | telebot -s $3
 	elif [[$PROGRAM == "fluent"]]
 	then
 		if [[ "$(tail -500 $FILE | grep "exit" | cut -d" " -f1)" == "exit" ]]
 		then
-			echo "*A SIMULAÇÃO ACABOU*" | telebot $3
+			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 		fi
 		FLOWTIME=$( tail -50 $FILE | grep "Flow time" | tail -1 )
-		printf -v FLOWTIME
 		MESSAGE="The current status of your simulation is:\n$FLOWTIME"
-		echo -e $MESSAGE | telebot $3
+		echo -e $MESSAGE | telebot -s $3
 	else
 		printf "Sorry program not recognized\nThe current supported options are:\n\t - cfx\n\t - fluent\n"
-	fi 
+	fi
 	sleep $2
-done	
+done
