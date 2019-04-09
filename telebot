@@ -10,8 +10,6 @@ fi
 if [[ $1 == "-a" ]] then
 	echo "$2\t$3">>$HOME/telebot/token
 fi
-# diego=773945556
-# luiz=704337050
 ################### Send
 if [[ $1 == "-s" ]]; then
 	if [ $2 == "$(grep TOKEN | cut -d "\t" -f1)" ]
