@@ -10,7 +10,7 @@ A simple bash script that monitors a certain file and triggers **telebot** in or
 In order to list this program to your shell please export its path, by default
 
 `git clone https://github.com/dgeneratioN/telebot
-`export PATH=$HOME/telebot:$PATH
+export PATH=$HOME/telebot:$PATH
 source .bashrc`
 
 It can be used by the following sintaxe
