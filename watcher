@@ -6,7 +6,7 @@ while [ 1 ]
 do
 	if [[$PROGRAM == "cfx"]]
 	then
-		if [[ "$(tail -1 $FILE)" == *"This run of the ANSYS CFX Solver has finished."* ]]
+		if [[ "$(tail -1 $FILE)" == "This run of the ANSYS CFX Solver has finished." ]]
 		then
 			echo "SUA SIMULAÇÃO ESTÁ PARADA !!!" | telebot -s $3
 		fi
