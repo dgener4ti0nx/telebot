@@ -10,10 +10,14 @@ do
 		fi
 		FLOWTIME=$( tail -1000 $FILE | grep "TIME STEP" | tail -1 | cut -d" " -f10 )
 		TIMESTEP=$( tail -1000 $FILE | grep "TIME STEP" | tail -1 | cut -d" " -f6 )
+		
+		############## FORMATING #########################
 		printf -v FLOWTIME "%.f" "$FLOWTIME"
 		printf -v STEP "%.f" "$STEP"
 		FLOWTIME_H=$(bc <<< "scale=3;$FLOWTIME/3600")
 		FLOWTIME_D=$(bc <<< "scale=3;$FLOWTIME/86400")
+		##################################################
+		
 		MESSAGE="*STEP*:$TIMESTEP\n*FLOW*:$FLOWTIME\[s], $FLOWTIME_H\[h], $FLOWTIME_D\[d]"
 		echo -e $MESSAGE | telebot -s $3
 	elif [[$PROGRAM == "fluent"]]; then
