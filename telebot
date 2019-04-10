@@ -1,27 +1,31 @@
 #!/bin/bash
 TOKEN=$(<$HOME/telebot/token)
-CHATID=$(<$HOME/telebot/chat_id)
+USER=$(<$HOME/telebot/users)
 STDIN=$(cat)
 
 MESSAGE=$STDIN
 ################### Add bot
 if [[ -z "$TOKEN" ]]; then
 	echo "No bot TOKEN specified.\nPlease add bot by sending:\ntelebot -b [token]"
+	exit 1
 fi
-if [[ $1 == "-b" ]] then
+if [[ $1 == "-b" ]]; then
 	echo "$2">>$HOME/telebot/token
+	exit 2
 fi
 ################### Add user
 if [[ -z "$CHATID" ]]; then
-	echo "No CHATID values found.\nPlease add users by sending:\ntelebot -a [user] [chatid]"
+	echo "No user values found.\nPlease add users by sending:\ntelebot -a [user] [chatid]"
+	exit 1
 fi
-if [[ $1 == "-a" ]] then
-	echo "$2\t$3\n">>$HOME/telebot/chat_id
+if [[ $1 == "-a" ]]; then
+	echo "$2\t$3\n">>$HOME/telebot/users
+	exit 2
 fi
 ################### Send
 if [[ $1 == "-s" ]]; then
-	if [ $2 == "$(grep $CHATID "$2" | cut -d "\t" -f1-)" ]
-		then CHATID="$(grep $CHATID "$2"| cut -d "\t" -f2-)"
+	if [ $2 == "$(grep $USER "$2" | cut -d "\t" -f1-)" ]; then
+			CHATID="$(grep $USER "$2"| cut -d "\t" -f2-)"
 	else
 		echo "Sorry, user was not found."
 	exit 1

@@ -4,10 +4,8 @@ FILE=$1
 PROGRAM=$4
 while [ 1 ]
 do
-	if [[$PROGRAM == "cfx"]]
-	then
-		if [[ "$(tail -1 $FILE)" == "This run of the ANSYS CFX Solver has finished." ]]
-		then
+	if [[$PROGRAM == "cfx"]]; then
+		if [[ "$(tail -1 $FILE)" == "This run of the ANSYS CFX Solver has finished." ]]; then
 			echo "SUA SIMULAÇÃO ESTÁ PARADA !!!" | telebot -s $3
 		fi
 		FLOWTIME=$( tail -1000 $FILE | grep "TIME STEP" | tail -1 | cut -d" " -f10 )
@@ -18,10 +16,8 @@ do
 		FLOWTIME_D=$(bc <<< "scale=3;$FLOWTIME/86400")
 		MESSAGE="*STEP*:$TIMESTEP\n*FLOW*:$FLOWTIME\[s], $FLOWTIME_H\[h], $FLOWTIME_D\[d]"
 		echo -e $MESSAGE | telebot -s $3
-	elif [[$PROGRAM == "fluent"]]
-	then
-		if [[ "$(tail -500 $FILE | grep "exit" | cut -d" " -f1)" == "exit" ]]
-		then
+	elif [[$PROGRAM == "fluent"]]; then
+		if [[ "$(tail -500 $FILE | grep "exit" | cut -d" " -f1)" == "exit" ]]; then
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 		fi
 		FLOWTIME=$( tail -50 $FILE | grep "Flow time" | tail -1 )
