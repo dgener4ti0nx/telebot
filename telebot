@@ -1,6 +1,6 @@
 #!/bin/bash
-TOKEN=$(<token)
-CHATID=$(<chat_id)
+TOKEN=$(<$HOME/telebot/token)
+CHATID=$(<$HOME/telebot/chat_id)
 STDIN=$(cat)
 
 MESSAGE=$STDIN
