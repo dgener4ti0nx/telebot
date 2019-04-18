@@ -1,6 +1,7 @@
 #!/bin/bash
 TOKEN=$(<$HOME/telebot/token)
 USER=$(<$HOME/telebot/users)
+=======
 STDIN=$(cat)
 
 MESSAGE=$STDIN
