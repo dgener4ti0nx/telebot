@@ -1,0 +1,17 @@
+#arg1=phrases collection
+#arg2= (optional) appends the string to the phase collection
+
+if [ -z "$2" ]
+then
+	while [ 1 ]
+	do	
+		SLEEPTIME=$(( $RANDOM%7200 + 1800 )) 		
+		MESSAGE=$(shuf -n 1 $1)
+		echo -e $MESSAGE | bash telebot.sh diego 
+		echo -e $MESSAGE | bash telebot.sh luiz
+		sleep $SLEEPTIME
+	done
+else 
+	echo $2 >> $1 #appends the string to the phrases collection
+fi
+
