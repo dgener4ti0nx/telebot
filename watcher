@@ -25,7 +25,7 @@ do
 		
 		MESSAGE="*STEP*:$TIMESTEP\n*FLOW*:$FLOWTIME\[s], $FLOWTIME_H\[h], $FLOWTIME_D\[d]"
 		echo -e $MESSAGE | telebot -s $3
-		$TIME=$( du --time $1 | cut -f2 )
+		TIME=$( du --time $1 | cut -f2 )
 	elif [[$PROGRAM == "fluent"]]; then
 		if [[ "$(tail -500 $FILE | grep "exit" | cut -d" " -f1)" == "exit" ]]; then
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
@@ -37,7 +37,7 @@ do
 		FLOWTIME=$( tail -50 $FILE | grep "Flow time" | tail -1 )
 		MESSAGE="The current status of your simulation is:\n$FLOWTIME"
 		echo -e $MESSAGE | telebot -s $3
-		$TIME=$( du --time $1 | cut -f2 )
+		TIME=$( du --time $1 | cut -f2 )
 	else
 		printf "Sorry program not recognized\nThe current supported options are:\n\t - cfx\n\t - fluent\n"
 	fi
