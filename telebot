@@ -1,10 +1,8 @@
 #!/bin/bash
 
 ## INIT__ 
-[[ -f $HOME/telebot/users ]] || touch $HOME/telebot/users #create users file if it doesn't exist
-[[ -f $HOME/telebot/token ]] || touch $HOME/telebot/token #create tokens file if it doesn't exist
-TOKEN=$(<$HOME/telebot/token)
-USER=$(<$HOME/telebot/users)
+TOKEN=$(<$HOME/.telebot/token)
+USER=$(<$HOME/.telebot/users)
 
 
 ################### token or files not found
