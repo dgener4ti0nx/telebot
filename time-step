@@ -1,0 +1,3 @@
+LINE=$(cat terminal.log | grep "Writing" -n | tail -1 | sed 's/\([0-9]*\).*/\1/')
+LINE=$(($LINE+7))
+cat terminal.log | head -n $LINE | tail -8

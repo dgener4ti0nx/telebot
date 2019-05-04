@@ -9,7 +9,7 @@ do
 		if [[ "$(tail -1 $FILE)" == "This run of the ANSYS CFX Solver has finished." ]]; then
 			echo "SUA SIMULAÇÃO ESTÁ PARADA !!!" | telebot -s $3
 			exit 0
-		elif [[ "$(du --time $FILE | awk '{print $3}')" == "$TIME" ]]; then
+		elif [[ "$(du --time $FILE | awk '{print $2 "" $3}')" == "$TIME" ]]; then
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
 		fi
@@ -19,7 +19,7 @@ do
 
 		############## FORMATING #########################
 		FLOWTIME_DEC=$(printf "%.f" "$FLOWTIME")
-		STEP_DEC=$(printf "%.f" "$TIMESTEP") 
+		STEP_DEC=$(printf "%.f" "$TIMESTEP")
 		FLOWTIME_H=$(bc <<< "scale=3;$FLOWTIME/3600")
 		FLOWTIME_D=$(bc <<< "scale=3;$FLOWTIME/86400")
 		##################################################
@@ -31,7 +31,7 @@ do
 		if [[ "$(tail -500 $FILE | grep "exit" | awk '{print $1}')" == "exit" ]]; then
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
-		elif [[ "$(du --time $FILE | awk '{print $2}')" == "$TIME" ]]; then
+		elif [[ "$(du --time $FILE | awk '{print $2 "" $3}')" == "$TIME" ]]; then
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
 		fi
