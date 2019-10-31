@@ -1,10 +1,14 @@
 #!/bin/bash
+
+## USAGE: watcher [File] [Frequency] [Receiver] [Program]
+
 i=1
 FILE=$1
 PROGRAM=$4
 TIME=0
 while [ 1 ]
 do
+	## CFX OPTIONS
 	if [[ $PROGRAM == "cfx" ]]; then
 		if [[ "$(tail -1 $FILE)" == "This run of the ANSYS CFX Solver has finished." ]]; then
 			echo "SUA SIMULAÇÃO ESTÁ PARADA !!!" | telebot -s $3
@@ -27,6 +31,8 @@ do
 		MESSAGE="*STEP*:$STEP_DEC\n*FLOW*:$FLOWTIME_DEC\[s], $FLOWTIME_H\[h], $FLOWTIME_D\[d]"
 		echo -e $MESSAGE | telebot -s $3
 		TIME=$( du --time $FILE | awk '{print $3}' )
+
+	## FLUENT OPTIONS
 	elif [[ $PROGRAM == "fluent" ]]; then
 		if [[ $TIME == 0 ]]; then
 			echo -e "*Hello Master*\nWhat a wonderful day to simulate!" | telebot -s $3
@@ -38,7 +44,30 @@ do
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
 		fi
-		FLOWTIME=$( tail -50 $FILE | grep "Flow time" | tail -1 )
+		FLOWTIME=$( tail -80 $FILE | grep "Flow time" | tail -1 )
+		if [[ $FLOWTIME == $AUX ]]; then
+			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			exit 0
+		else
+			MESSAGE="The current status of your simulation is:\n$FLOWTIME"
+			echo -e $MESSAGE | telebot -s $3
+			TIME=$( du --time $FILE | awk '{print $2}' )
+		fi
+		AUX=$FLOWTIME
+
+	## OPENFOAM OPTIONS
+	elif [[ $PROGRAM == "openfoam" ]]; then
+		if [[ $TIME == 0 ]]; then
+			echo -e "*Hello Master*\nWhat a wonderful day to simulate!" | telebot -s $3
+		fi
+		if [[ "$(tail -500 $FILE | grep "End" | awk '{print $1}')" == "End" ]]; then
+			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			exit 0
+		elif [[ "$(du --time $FILE | awk '{print $2 "" $3}')" == "$TIME" ]]; then
+			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			exit 0
+		fi
+		FLOWTIME=$( tail -50 $FILE | grep "Time" | tail -1 )
 		if [[ $FLOWTIME == $AUX ]]; then
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
@@ -49,7 +78,8 @@ do
 		fi
 		AUX=$FLOWTIME
 	else
-		printf "Sorry program not recognized\nThe current supported options are:\n\t - cfx\n\t - fluent\n"
+		printf "Sorry program not recognized\nThe current supported options are:\n\t - cfx\n\t - fluent\n\t - openfoam\n"
+		exit 1
 	fi
 	sleep $2
 done

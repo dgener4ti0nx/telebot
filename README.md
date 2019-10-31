@@ -25,3 +25,4 @@ It can be used by the following sintaxe
 It currently supports two CFD outputs by default:
 * ANSYS® CFX
 * ANSYS® FLUENT - via exported console transcript
+* OpenFOAM - via log file
