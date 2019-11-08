@@ -3,7 +3,7 @@ A simple bash script that sends HTTP requests to the telegram API
 
 ## Usage
 
-telebot -s [USER] [MESSAGE]
+`telebot -s [USER] [MESSAGE]`
 
 in case no message is passed, telebot takes input from the stdin.
 
@@ -26,3 +26,6 @@ It currently supports two CFD outputs by default:
 * ANSYS® CFX
 * ANSYS® FLUENT - via exported console transcript
 * OpenFOAM - via log file
+
+# time-step
+This command searches for a file names terminal.log (fluent console output) and displays the latest time-step saved. Also it will delete the extra time-steps in the monitor files with the **.out** extension, making it ready to run again.
