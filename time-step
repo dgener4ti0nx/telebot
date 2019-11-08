@@ -1,3 +1,25 @@
+#!/bin/sh
+
+# Prints the lastest time-step saved
 LINE=$(cat terminal.log | grep "Writing" -n | tail -1 | sed 's/\([0-9]*\).*/\1/')
 LINE=$(($LINE+7))
 cat terminal.log | head -n $LINE | tail -8
+
+# Calculates the amount of lines to be deleted
+LINE=$(($LINE-2))
+
+savedTime=$(cat terminal.log | head -n $LINE | tail -18 | awk '{print $1}' | head -n 1)
+latestTime=$(cat terminal.log | tail -1 | awk '{print $1}')
+
+deleted=$(($latestTime - $savedTime))
+
+# Removes the unsaved time-steps from monitor files
+while [ $deleted -gt 0 ]
+do
+	deleted=$(($deleted-1))
+	sed -i '$ d' *.out
+done
+
+# Shows the amount of deleted lines and outputs the last line of monitor files
+echo -e "\n$deleted were deleted\nSampling last line on .out files\n"
+tail -n1 *out
