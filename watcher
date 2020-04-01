@@ -57,6 +57,8 @@ do
 
 	## OPENFOAM OPTIONS
 	elif [[ $PROGRAM == "openfoam" ]]; then
+		CASE=${PWD##*/}
+		cd log/
 		if [[ $TIME == 0 ]]; then
 			echo -e "*Hello Master*\nWhat a wonderful day to simulate!" | telebot -s $3
 		fi
@@ -72,7 +74,7 @@ do
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
 		else
-			MESSAGE="The current status of your simulation is:\n$FLOWTIME"
+			MESSAGE="The current status of your $CASE is:\n$FLOWTIME"
 			echo -e $MESSAGE | telebot -s $3
 			TIME=$( du --time $FILE | awk '{print $2}' )
 		fi
