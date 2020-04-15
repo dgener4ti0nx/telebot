@@ -3,6 +3,8 @@
 case=${PWD##*/}
 drive=$1
 
+cd ..
+
 # Compact and split
 tar -zcvf - $case  | split --bytes=20GB --suffix-length=3 --numeric-suffixes=1 - $case.tgz.
 
