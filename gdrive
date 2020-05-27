@@ -2,11 +2,12 @@
 
 case=${PWD##*/}
 drive=$1
+cores=$2
 
 cd ..
 
 # Compact and split
-tar -zcvf - $case  | split --bytes=20GB --suffix-length=3 --numeric-suffixes=1 - $case.tgz.
+tar -cvf - $case | pigz -v -9 -p $cores | split --bytes=20GB --suffix-length=3 --numeric-suffixes=1 - $case.tgz.
 
 # Upload
 rclone copy -vv . --include "$case.tgz.*" $drive:Temp/
