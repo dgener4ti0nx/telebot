@@ -10,11 +10,4 @@ cd ..
 tar -cvf - $case | pigz -v -9 -p $cores | split --bytes=20GB --suffix-length=3 --numeric-suffixes=1 - $case.tgz.
 
 # Upload
-rclone copy -vv . --include "$case.tgz.*" $drive:Temp/
-
-# Try this if above does not work
-
-#for loop in $(ls *.tgz)
-#	do
-#		rclone copy $loop $drive:Temp/
-#	done
+rclone copy -vv . --include "$case.tgz.*" $drive:Temp/ > gdrive.log
