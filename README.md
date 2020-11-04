@@ -1,11 +1,14 @@
 # telebot
 A simple bash script that sends HTTP requests to the telegram API
 
-## Usage
+## Configuration
+In the first usage, the user must provide the bot token to be used. This can be provided by:
 
-`telebot -s [USER] [MESSAGE]`
+`telebot -b [API key]`
 
-in case no message is passed, telebot takes input from the stdin.
+The users should be provided by the following command:
+
+`telebot -u [user] [userID]`
 
 # watcher
 A simple bash script that monitors a certain file and triggers **telebot** in order to send a warning through telegram. This program works on sending alerts for finished simulations and its current status.
