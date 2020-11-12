@@ -69,7 +69,7 @@ do
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
 		fi
-		FLOWTIME=$( tail -50 $FILE | grep -w "Time" | tail -1 )
+		FLOWTIME=$( tail -200 $FILE | grep -w "Time" | tail -1 )
 		if [[ $FLOWTIME == $AUX ]]; then
 			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
 			exit 0
