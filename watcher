@@ -69,15 +69,15 @@ do
 			cd log/
 		fi
 		if [[ "$(tail -500 $FILE | grep "End" | awk '{print $1}')" == "End" ]]; then
-			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		elif [[ "$(du --time $FILE | awk '{print $2 "" $3}')" == "$TIME" ]]; then
-			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		fi
-		FLOWTIME=$( tail -200 $FILE | grep -w "Time" | tail -1 )
+		FLOWTIME=$( tail -200 $FILE | grep -w "Time =" | tail -1 )
 		if [[ $FLOWTIME == $AUX ]]; then
-			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		else
 			MESSAGE="The current status of your *$CASE* is:\n$FLOWTIME"
