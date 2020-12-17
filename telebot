@@ -33,11 +33,11 @@ fi
 
 ################### Send
 if [[ $1 == "-s" ]]; then
-	if [ $2 == "$(cat $HOME/.telebot/users | grep $2 | awk '{print $1}')" ]; then
-		CHATID="$(cat $HOME/.telebot/users | grep $2 | awk '{print $2}')"
+	if [ $2 == "$(cat $HOME/telebot/users | grep $2 | awk '{print $1}')" ]; then
+		CHATID="$(cat $HOME/telebot/users | grep $2 | awk '{print $2}')"
 	else
 		clear
-		echo -e "Sorry, user \"$2\" was not found.\nYou can add this user by using:\n?"
+		echo -e "Sorry, user \"$2\" was not found.\nYou can add this user by using:\n"
 		echo -e "telebot -u [user] [userID]\n"
 		exit 1
 	fi
