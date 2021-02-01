@@ -23,7 +23,7 @@ In order to list this program to your shell please export its path, by default
 
 It can be used by the following sintaxe
 
-`watcher [File] [Frequency] [Receiver] [Program]`
+`watcher [File] [Frequency] [Receiver] [Program] [Simulation Name]`
 
 It currently supports two CFD outputs by default:
 * ANSYS® CFX

@@ -1,11 +1,18 @@
 #!/bin/bash
 
-## USAGE: watcher [File] [Frequency] [Receiver] [Program]
+## USAGE: watcher [File] [Frequency] [Receiver] [Program] [Simulation Folder]
 
 i=1
 FILE=$1
 PROGRAM=$4
 TIME=0
+if [ -z "$1" ]
+  then
+    CASE=${PWD##*/}
+else
+    CASE=$5
+fi
+
 while [ 1 ]
 do
 	## CFX OPTIONS
@@ -59,19 +66,18 @@ do
 	elif [[ $PROGRAM == "openfoam" ]]; then
 		if [[ $TIME == 0 ]]; then
 			echo -e "*Hello Master*\nWhat a wonderful day to simulate!" | telebot -s $3
-			CASE=${PWD##*/}
 			cd log/
 		fi
 		if [[ "$(tail -500 $FILE | grep "End" | awk '{print $1}')" == "End" ]]; then
-			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		elif [[ "$(du --time $FILE | awk '{print $2 "" $3}')" == "$TIME" ]]; then
-			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		fi
-		FLOWTIME=$( tail -50 $FILE | grep -w "Time" | tail -1 )
+		FLOWTIME=$( tail -200 $FILE | grep -w "Time =" | tail -1 )
 		if [[ $FLOWTIME == $AUX ]]; then
-			echo "*A SIMULAÇÃO ACABOU*" | telebot -s $3
+			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		else
 			MESSAGE="The current status of your *$CASE* is:\n$FLOWTIME"
