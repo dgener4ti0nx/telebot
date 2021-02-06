@@ -1,0 +1,5 @@
+#!/bin/bash
+
+FILE=$1
+
+for i in */; do cp $FILE ${i%/}/system/controlDict & done; wait
