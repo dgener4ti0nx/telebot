@@ -1,5 +1,17 @@
 #!/bin/bash
 
-FILE=$1
+USAGE="
+	Created by Luiz Oliveira 2020
+	Copies an indicated file to all subfolders at a given generic destination.
 
-for i in */; do cp $FILE ${i%/}/system/controlDict & done; wait
+	USAGE: copyToAll FILE DESTINATION
+      "
+if [ $# == 0 ]; then
+	echo "$USAGE"
+	exit 1
+fi
+
+FILE=$1
+DEST=$2
+
+for i in */; do cp $FILE ${i%/}/$2 & done; wait
