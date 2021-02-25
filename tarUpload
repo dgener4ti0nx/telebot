@@ -14,7 +14,7 @@ usage()
 }
 
 # Read the arguments
-while getopts :h:p:u:-all: opt; do
+while getopts :hu-allp: opt; do
 	case ${opt} in
 		p)
 			par=1
@@ -42,17 +42,17 @@ if [[ -z "${par}" ]]; then
 	tar -zcvf ${FOLDER}.tgz ${FOLDER} > tarUpload${FOLDER}.log
 	echo "Folder Compacted"
 elif [[ -n ${processes} ]]; then
-	tar cf - ${FOLDER} | pigz -9 -p ${processes} > ${FOLDER}.tgz
+	tar cfv - ${FOLDER} | pigz -9 -p ${processes} > ${FOLDER}.tgz
 	echo "Folder Compacted with ${processes} processes."
 else
 	usage
 fi
 
 if [[ ${upload} -eq 1 ]]; then
-	rclone copy -vv ${FOLDER}.tgz LUIZ:tempResults/ > tarUpload${FOLDER}Rclone.log
+	rclone copy -vv ${FOLDER}.tgz LUIZ:tempResults/ 1>& tarUpload${FOLDER}Rclone.log
 	echo "Folder Uploaded"
 elif [[ ${all} -eq 1 ]]; then
-	rclone copy -vv . --include "*.tgz" LUIZ:tempResults/ > tarUploadALLRclone.log
+	rclone copy -vv . --include "*.tgz" LUIZ:tempResults/ 1>& tarUploadALLRclone.log
 	echo "All folders Uploaded"
 fi
 
