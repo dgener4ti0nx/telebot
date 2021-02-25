@@ -7,7 +7,7 @@ usage()
 	echo -e "Usage:\n"\
 	"tarUpload [OPTIONS] [FOLDER NAME]\n"\
 	"Options:\n"\
-	"[-p [# of Processes or NULL to take all the available tasks] Compacts in parallel mode\n]"\
+	"[-p [# of Processes or NULL to take all the available tasks] Compacts in parallel mode]\n"\
 	"[-h Returns the usage of this script]\n"\
 	"[-u Uploads the compacted cases to the cloud]\n"\
 	"[--all Uploads all .tgz files to the cloud]" 1>&2; exit 1;
