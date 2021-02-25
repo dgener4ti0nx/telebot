@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# This script downloads files using a sequence in rclone
+
+usage()
+{ 
+	echo -e "Usage:\n"\
+	"tarUpload [OPTIONS] [FOLDER NAME]\n"\
+	"Options:\n"\
+	"[-p [# of Processes or NULL to take all the available tasks] Compacts in parallel mode\n]"\
+	"[-h Returns the usage of this script]\n"\
+	"[-u Uploads the compacted cases to the cloud]\n"\
+	"[--all Uploads all .tgz files to the cloud]" 1>&2; exit 1;
+}
+
+# Read the arguments
+while getopts :hpu-all: opt; do
+	case ${opt} in
+		p)if [[ -v ${OPTARG} ]]; then #if variable exists
+			processes=${OPTARG}
+			echo ${processes}
+		  fi;;
+		u)upload=1;;
+		-all)all=1;;
+		h | *)usage;;
+	esac
+done
+# Take Folder Name
+shift $(($OPTIND-1))
+FOLDER=$1
+
+if [[ -z "${FOLDER}" ]]; then
+	usage
+fi
+
+if [[ -z "${p}" ]]; then
+	tar -zcvf ${FOLDER}.tgz ${FOLDER} > tarUpload${FOLDER}.log
+	echo "Folder Compacted"
+elif [[ -v ${processes} ]]; then
+	tar cf - ${FOLDER} | pigz -9 -p ${processes} > ${FOLDER}.tgz
+else
+	tar cf - ${FOLDER} | pigz -9 > ${FOLDER}.tgz
+fi
+
+if [[ ${upload} -eq 1 ]]; then
+	rclone copy -vv ${FOLDER}.tgz LUIZ:tempResults/ > tarUpload${FOLDER}Rclone.log
+	echo "Folder Uploaded"
+elif [[ ${all} -eq 1 ]]; then
+	rclone copy -vv . --include "*.tgz" LUIZ:tempResults/ > tarUploadALLRclone.log
+	echo "Folders Uploaded"
+fi
+
+printf '%*s' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+echo -e "All Done"
