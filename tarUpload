@@ -42,7 +42,7 @@ if [[ -z "${par}" ]]; then
 	tar -zcvf ${FOLDER}.tgz ${FOLDER} 1>& tarUpload${FOLDER}.log
 	echo "Folder Compacted"
 elif [[ -n ${processes} ]]; then
-	tar cfv - ${FOLDER} | pigz -9 -p ${processes} 1>& ${FOLDER}.tgz
+	tar cf - ${FOLDER} | pigz -9 -p ${processes} 1>& ${FOLDER}.tgz
 	echo "Folder Compacted with ${processes} processes."
 else
 	usage
