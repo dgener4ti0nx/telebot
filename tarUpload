@@ -39,10 +39,10 @@ if [[ -z "${FOLDER}" && -z "${all}" ]]; then
 fi
 
 if [[ -z "${par}" ]]; then
-	tar -zcvf ${FOLDER}.tgz ${FOLDER} > tarUpload${FOLDER}.log
+	tar -zcvf ${FOLDER}.tgz ${FOLDER} 1>& tarUpload${FOLDER}.log
 	echo "Folder Compacted"
 elif [[ -n ${processes} ]]; then
-	tar cfv - ${FOLDER} | pigz -9 -p ${processes} > ${FOLDER}.tgz
+	tar cfv - ${FOLDER} | pigz -9 -p ${processes} 1>& ${FOLDER}.tgz
 	echo "Folder Compacted with ${processes} processes."
 else
 	usage
