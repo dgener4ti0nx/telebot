@@ -68,14 +68,14 @@ do
 			echo -e "*Hello Master*\nWhat a wonderful day to simulate!" | telebot -s $3
 			cd log/
 		fi
-		if [[ "$(tail -500 $FILE | grep "End" | awk '{print $1}')" == "End" ]]; then
+		if [[ "$(tail -1000 $FILE | grep "End" | awk '{print $1}')" == "End" ]]; then
 			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		elif [[ "$(du --time $FILE | awk '{print $2 "" $3}')" == "$TIME" ]]; then
 			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
 		fi
-		FLOWTIME=$( tail -200 $FILE | grep -w "Time =" | tail -1 )
+		FLOWTIME=$( tail -1000 $FILE | grep -w "Time =" | tail -1 )
 		if [[ $FLOWTIME == $AUX ]]; then
 			echo "*A SIMULAÇÃO $CASE ACABOU*" | telebot -s $3
 			exit 0
